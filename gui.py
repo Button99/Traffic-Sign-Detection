@@ -1,20 +1,65 @@
-import tkinter as tk
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QMessageBox
+from PyQt5.QtCore import pyqtSlot
 from PIL import Image
 import numpy as np
 import csv
-from keras.models import load_model
 
 model= ("PATH")
 
 # Creating dictionary
-
+'''
 dict= {}
 
 reader= csv.reader(open("LABELS PATH"))
 
 for row in reader:
     dict[row[0]]= row[1:]
+'''
+
+# GUI
+
+class App(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.title= "Traffic Sign Detection"
+        self.left= 50
+        self.top= 50
+        self.width= 400
+        self.height= 400
+        self.initUI()
 
 
+    def initUI(self):
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
-''' Need to create the gui and the buttons '''
+        # in the textbox the user will add the path of the photo
+        self.textbox= QLineEdit(self)
+        self.textbox.resize(170, 30)
+        self.textbox.move(100, 50)
+
+        self.findSign= QPushButton("Find the sign", self)
+        self.findSign.move(100, 200)
+       # self.button.clicked.connect(self.click_SearchButton)
+
+        self.upldImg= QPushButton("Upload image", self)
+        self.upldImg.move(200, 200)
+       # self.button2.clicked.connect(self.click_CancelButton)
+
+        self.show()
+
+
+if __name__ == "__main__":
+    app= QApplication(sys.argv)
+    ex= App()
+    sys.exit(app.exec_())
+
+
+'''
+    Need to make better the ui -- 
+    Function upload img
+    Function Find the sign
+
+'''
