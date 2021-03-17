@@ -41,14 +41,30 @@ class App(QWidget):
         self.textbox.move(100, 50)
 
         self.findSign= QPushButton("Find the sign", self)
+        self.findSign.setToolTip("Click to search the sign")
         self.findSign.move(100, 200)
-       # self.button.clicked.connect(self.click_SearchButton)
+        self.findSign.clicked.connect(self.click_SearchButton)
 
         self.upldImg= QPushButton("Upload image", self)
         self.upldImg.move(200, 200)
        # self.button2.clicked.connect(self.click_CancelButton)
 
         self.show()
+    @pyqtSlot()
+
+    # function for search button
+    def click_SearchButton(self):
+        print("Search button clicked")
+        imgPath= self.textbox.text()
+        image= Image.open(imgPath)
+        image= image.resize(32, 32)
+        image= np.expand_dims(image, axis=0)    
+        image= np.array(image)
+        pred= model.predict_classes([image])[0]
+        print(pred)
+
+
+
 
 
 if __name__ == "__main__":
@@ -59,7 +75,8 @@ if __name__ == "__main__":
 
 '''
     Need to make better the ui -- 
-    Function upload img
-    Function Find the sign
+    Function upload img 
+    Function Find the sign -- problem with the resize 
 
 '''
+
